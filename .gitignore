@@ -2,3 +2,4 @@
 .buildpath
 .settings
 vendor/*
+node_modules/*

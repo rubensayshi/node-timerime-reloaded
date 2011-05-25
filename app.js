@@ -1,7 +1,8 @@
 var sys 			= require('sys'),
-    dj 				= require('./vendor/djangode/djangode'),
-    template_system = require('./vendor/djangode/template/template'),
-    template_loader = require('./vendor/djangode/template/loader');
+    express 		= require('./node_modules/express'),
+    template_system = require('./node_modules/djangode/template/template'),
+    template_loader = require('./node_modules/djangode/template/loader')
+    app 			= express.createServer();
 
 //set template path
 template_loader.set_path('templates');
@@ -20,51 +21,37 @@ ship: {
 }
 };
 
+require('./controllers/textpage')(app);
 
-//make app
-var app = dj.makeApp([
-['^/$', function(req, res) {
-    dj.respond(res, '<h1>djangode template demo</h1> \
-        <ul> \
-            <li><a href="/template">The raw template</a></li> \
-            <li><a href="/context">The test context</a></li> \
-            <li><a href="/text">The template rendered as text</a></li> \
-            <li><a href="/html">The template rendered as html</a></li> \
-        </ul> \
+app.get('/', function(req, res){
+    res.send('<h1>express + django template demo</h1> \
+            <ul> \
+                <li><a href="/text">The template rendered as text</a></li> \
+                <li><a href="/html">The template rendered as html</a></li> \
+            </ul> \
     ');
-}],
+});
 
-['^/template$', function (req, res) {
-    dj.serveFile(req, res, 'templates/template.html');
-}],
-
-['^/context$', function (req, res) {
-    dj.respond(res, sys.inspect(test_context), 'text/plain');
-}],
-
-['^/text$', function (req, res) {
+app.get('/text', function(req, res){
     template_loader.load_and_render('template.html', test_context, function (error, result) {
         if (error) {
-            dj.default_show_500(req, res, error);
+            console.log(error);
         } else {
-            dj.respond(res, result, 'text/plain');
+            res.writeHeader(200, { 'Content-Type': 'text/plain;' });
+        	res.write(result);
+        	res.end();
         }
     });
-}],
+});
 
-['^/html$', function (req, res) {
+app.get('/html', function(req, res){
     template_loader.load_and_render('template.html', test_context, function (error, result) {
         if (error) {
-            dj.default_show_500(req, res, error);
+            console.log(error);
         } else {
-            dj.respond(res, result, 'text/html');
+        	res.send(result);
         }
     });
-}],
+});
 
-['^/(template-demo/.*)$', dj.serveFile],
-
-]);
-
-dj.serve(app, 8009);
-process.djangode_urls = app.urls;
+app.listen(3000);

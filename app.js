@@ -26,8 +26,10 @@ require('./controllers/textpage')(app);
 app.get('/', function(req, res){
     res.send('<h1>express + django template demo</h1> \
             <ul> \
-                <li><a href="/text">The template rendered as text</a></li> \
-                <li><a href="/html">The template rendered as html</a></li> \
+            <li><a href="/text">The template rendered as text</a></li> \
+            <li><a href="/html">The template rendered as html</a></li> \
+            <li><a href="/page">page</a></li> \
+            <li><a href="/pagee">page</a></li> \
             </ul> \
     ');
 });

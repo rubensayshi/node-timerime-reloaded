@@ -1,0 +1,3 @@
+[submodule "vendor/djangode"]
+	path = vendor/djangode
+	url = https://github.com/simonw/djangode.git

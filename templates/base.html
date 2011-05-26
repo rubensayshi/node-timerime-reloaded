@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>{% block title %}[title]{% endblock %}</title>
+		<link href="/web/css/style.css" rel="stylesheet" type="text/css" />
+		
+		{% block javascript_head %}
+			<script src="/web/js/vendor/jquery/jquery-1.5.2.js" type="text/javascript"></script>
+		{% endblock %}
+		
+    </head>
+    <body>
+    	<div class="container">
+    		<div class="header">
+    			<div class="title font"><h1>WEBSITE</h1></div>
+    			<div class="menu">[menu]</div>
+    		</div>
+    		<div class="content">
+    			<div class="content-inner">{% block content %}{% endblock %}</div>
+    			<div class="content-sidebar">[sidebar]</div>
+    			<div class="clearfix"></div>
+    		</div>
+    	</div>        
+    </body>
+</html>

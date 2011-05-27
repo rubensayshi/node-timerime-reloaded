@@ -14,7 +14,7 @@
     	<div class="container">
     		<div class="header">
     			<div class="title font"><h1>WEBSITE</h1></div>
-    			<div class="menu"> {{ menu }} </div>
+    			<div class="menu"> {{ menu|safe }} </div>
     		</div>
     		<div class="content">
     			<div class="content-inner">{% block content %}{% endblock %}</div>

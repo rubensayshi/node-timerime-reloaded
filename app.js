@@ -4,15 +4,15 @@ var sys 			= require('sys'),
     mongoose		= require('mongoose');
 
 // load models
+require('./models/Category.js');
 require('./models/MenuItem.js');
 require('./models/User.js');
 require('./models/Timeline.js');
 require('./models/TimelineItem.js');
 
 // load custom modules
-var core			= require('./application/core');
-
-console.log(core.menu.render());
+var core			= require('./lib/core'),
+	menu			= require('./lib/menu');
 
 // initialize other vars
 var	Schema 			= mongoose.Schema,
@@ -25,14 +25,14 @@ mongoose.connect('mongodb://localhost/timerime_reloaded');
 // set template path
 core.template_loader.set_path('templates');
 
-// make static files available
+//make static files available
 app.use("/web", express.static(__dirname + '/web'));
 
-// require controllers
-// require('./controllers/textpage')(app);
+// init controllers
+require('./controllers/timeline')(app);
 
-// add some more routing
-app.get('/', function(req, res){    
+// add some routing
+app.get('/', function(req, res){   
 	core.render('homepage.html', {}, function (error, result) {
 	    if (error) {
 	        console.log(error);

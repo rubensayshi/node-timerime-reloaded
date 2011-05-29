@@ -7,6 +7,7 @@ var Timeline = new Schema({
 	title		: String,
 	body		: String,
 	author		: ObjectId,
+	categories	: [ObjectId],
 	coauthors	: [ObjectId],
 	created		: Date,
 	updated		: Date

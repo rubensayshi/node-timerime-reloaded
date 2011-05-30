@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-timeline {{ timeline.id }}...
+<h2>{{ timeline.title }}</h2>
+<p>by <b>{{ author.username }}</b> on {{ timeline.created }}</p>
+<p>{{ timeline.body }}</p>
 {% endblock %}

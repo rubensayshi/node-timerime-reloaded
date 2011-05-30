@@ -20,7 +20,7 @@ var	Schema 			= mongoose.Schema,
     app 			= express.createServer();
 
 // connect database
-mongoose.connect('mongodb://localhost/timerime_reloaded');
+mongoose.connect('mongodb://localhost/timerime-reloaded');
 
 // set template path
 core.template_loader.set_path('templates');

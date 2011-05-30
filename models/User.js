@@ -12,5 +12,13 @@ var User = new Schema({
 });
 
 
+User.pre('save', function (next) {
+	if (this.isNew) {
+		this.created = new Date();
+	}
+	
+    next();
+});
+
 mongoose.model('User', User);
 

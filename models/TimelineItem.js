@@ -4,6 +4,7 @@ var sys 			= require('sys'),
 	ObjectId		= Schema.ObjectId;
 
 var TimelineItem = new Schema({
+	slug		: String,
 	title		: String,
 	body		: String,
 	author		: ObjectId,

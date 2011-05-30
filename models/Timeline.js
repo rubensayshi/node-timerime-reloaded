@@ -5,6 +5,7 @@ var sys 			= require('sys'),
 
 var Timeline = new Schema({
 	title		: String,
+	slug		: String,
 	body		: String,
 	author		: ObjectId,
 	categories	: [ObjectId],

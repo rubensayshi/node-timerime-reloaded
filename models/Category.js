@@ -4,7 +4,8 @@ var sys 			= require('sys'),
 	ObjectId		= Schema.ObjectId;
 
 var Category = new Schema({
-	title		: String
+	title		: String,
+	slug		: String
 });
 
 mongoose.model('Category', Category);

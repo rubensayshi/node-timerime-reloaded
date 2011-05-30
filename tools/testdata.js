@@ -20,7 +20,7 @@ TimelineItem 	= mongoose.model('TimelineItem');
 
 
 var cats	= 15;
-var users	= 50;
+var users	= 10;
 var tls		= 2;
 var tlis	= 10;
 
@@ -48,11 +48,14 @@ for (var c = 0; c < cats; c++) {
 			var timeline = new Timeline();
 			timeline.title	= 'Timeline #'+c+' #'+u+' #'+t;
 			timeline.body	= lipsum();
+			timeline.author = user;
+			timeline.categories.push(cat);
 			
 			for (var i = 0; i < tlis; i++) {
 				var item = new TimelineItem();
-				item.title	= 'TimelineItem #'+c+' #'+u+' #'+t+' #'+i;
-				item.body	= lipsum();
+				item.title		= 'TimelineItem #'+c+' #'+u+' #'+t+' #'+i;
+				item.body		= lipsum();
+				item.timeline 	= timeline;
 				
 				send++;
 				item.save(function (err) {

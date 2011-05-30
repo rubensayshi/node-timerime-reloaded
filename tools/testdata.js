@@ -21,7 +21,7 @@ TimelineItem 	= mongoose.model('TimelineItem');
 
 var cats	= 15;
 var users	= 10;
-var tls		= 2;
+var tls		= 20;
 var tlis	= 10;
 
 var send	= 0;

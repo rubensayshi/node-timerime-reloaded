@@ -12,7 +12,8 @@ var Timeline = new Schema({
 	categories	: [ObjectId],
 	coauthors	: [ObjectId],
 	created		: Date,
-	updated		: Date
+	updated		: Date,
+	rating		: Number
 });
 
 Timeline.pre('save', function (next) {
@@ -21,6 +22,8 @@ Timeline.pre('save', function (next) {
 	if (this.isNew) {
 		this.created = new Date();
 	}
+	
+	this.updated = new Date();
 	
     next();
 });

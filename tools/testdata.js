@@ -18,6 +18,22 @@ User			= mongoose.model('User');
 Timeline		= mongoose.model('Timeline');
 TimelineItem 	= mongoose.model('TimelineItem');
 
+console.log('init done ..');
+
+var cat = new Category();
+cat.title = 'Category x';
+
+timeline = new Timeline();
+timeline.title = 'Timeline x';
+timeline.categories.push(cat);
+
+console.log('save ..');
+
+timeline.save();
+cat.save();
+
+return;
+
 
 var cats	= 15;
 var users	= 10;
@@ -50,6 +66,7 @@ for (var c = 0; c < cats; c++) {
 			timeline.body	= lipsum();
 			timeline.author = user;
 			timeline.categories.push(cat);
+			timeline.rating	= (Math.random()*10);
 			
 			for (var i = 0; i < tlis; i++) {
 				var item = new TimelineItem();

@@ -1,6 +1,7 @@
 var sys 			= require('sys'),
 	mongoose		= require('mongoose'),
 	slugify			= require('../utils/slugify.js'),
+	Timeline 		= mongoose.model('Timeline'),
 	Schema 			= mongoose.Schema,
 	ObjectId		= Schema.ObjectId;
 

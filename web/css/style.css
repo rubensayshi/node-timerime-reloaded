@@ -30,6 +30,27 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 	vertical-align: baseline;
 }
 
+.clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+ 
+.clearfix {
+	display: inline-block;
+}
+ 
+html[xmlns] .clearfix {
+	display: block;
+}
+ 
+* html .clearfix {
+	height: 1%;
+}
+
 /*
  * basic website layout styling
  */
@@ -65,7 +86,7 @@ h3								{ font-size: 150% }
 /*
  * block styling
  */
-.block 							{ min-height: 200px; -moz-border-radius: 5px; -webkit-border-radius: 5px; border: 1px solid #36393D; background-color: #CDEB8B;
+.block 							{ min-height: 100px; -moz-border-radius: 5px; -webkit-border-radius: 5px; border: 1px solid #36393D; background-color: #CDEB8B;
 								  float: left; margin: 10px 0px;
 								  width: 330px; }
 .block.left						{ margin-right: 5px; clear: both; }
@@ -82,3 +103,10 @@ h3								{ font-size: 150% }
 /*
  * timeline list styling (homepage etc)
  */
+
+/*
+ * category list styling (homepage etc)
+ */
+ul.category_list				{ list-style: none; padding: 0px; margin: 0px; }
+ul.category_list li				{ float: left; display: block; width: 220px; }
+ 

@@ -5,11 +5,11 @@ var core			= require('../lib/core'),
 	Timeline 		= mongoose.model('Timeline'),
 	TimelineItem	= mongoose.model('TimelineItem');
 
-module.exports = exports = function(app) {
-	app.get('/timelines', function(req, res) {
+module.exports = exports = function(app) {	
+	app.get('/', function(req, res) {
 		Category.find({}, function(error, docs) {
 			if(docs && docs.length) {				
-				core.render('categories.html', {categories : docs}, function (error, result) {
+				core.render('homepage.html', {categories : docs}, function (error, result) {
 			        if (error) {
 			            console.log(error);
 			        } else {

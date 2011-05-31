@@ -1,5 +1,59 @@
 {% extends "base.html" %}
 
 {% block content %}
-Welcome on the homepage ... 
+<div class="timerime_flash"> - - timeline swf should go here - - </div>
+
+<div class="block two-col">
+	<div class="header">Most popular timelines</div>
+	<div class="content">
+		<ul class="timeline_list">
+			{% for timeline in popular %}
+				<li>
+					{{ timeline.title }}
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+</div>
+
+<div class="block left">
+	<div class="header">New timelines</div>
+	<div class="content">
+		<ul class="timeline_list">
+			{% for timeline in new %}
+				<li>
+					{{ timeline.title }}
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+</div>
+
+<div class="block right">
+	<div class="header">Recently changed timelines</div>
+	<div class="content">
+		<ul class="timeline_list">
+			{% for timeline in updated %}
+				<li>
+					{{ timeline.title }}
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+</div>
+
+<div class="block two-col">
+	<div class="header">Categories</div>
+	<div class="content">
+		<ul class="category_list">
+			{% for category in categories %}
+				<li class="{% cycle 'col1' 'col2' 'col3' %}">
+					<a href="/timelines/{{ category.slug }}">{{ category.title }}</a>
+				</li>
+			{% endfor %}
+		</ul>
+		<div class="clearfix"></div>
+	</div>
+</div>
+
 {% endblock %}

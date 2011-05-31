@@ -31,17 +31,6 @@ app.use("/web", express.static(__dirname + '/web'));
 // init controllers
 require('./controllers/timeline')(app);
 
-// add some routing
-app.get('/', function(req, res){   
-	core.render('homepage.html', {}, function (error, result) {
-	    if (error) {
-	        console.log(error);
-	    } else {
-	    	res.send(result);
-	    }
-	});
-});
-
 app.get('/about', function(req, res){
 	core.render('about.html', {}, function (error, result) {
         if (error) {

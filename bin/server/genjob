@@ -1,0 +1,43 @@
+#!/bin/sh
+
+if [ -z "$MY_ROOT" ]; then
+	MY_ROOT=`php -r "echo dirname(dirname(dirname(realpath('$(pwd)/$0'))));"`
+	export MY_ROOT
+fi
+
+if [ -z "$MY_NODE" ]; then
+	MY_NODE=`which node`
+	export MY_NODE
+fi
+
+echo "#"
+echo "# the following output can be placed in a upstart script (/etc/init/timerime-reloaded.conf)"
+echo "# it will allow you to use the bin/server/* commands and it will boot the application when your machine boots"
+echo "#"
+echo ""
+
+echo "#"
+echo "# start"
+echo "#"
+echo ""
+
+echo "description \"timerime reloaded\""
+echo "author \"ruben\""
+echo ""
+
+echo "start on startup"
+echo "stop on shutdown"
+echo ""
+
+echo "env NODE=\"$MY_NODE\""
+echo "env DIR=\"$MY_ROOT\""
+echo ""
+
+echo "script"
+echo "  cd \"\$DIR\" && exec sudo -u root \$NODE \"\$DIR/app.js\" 2>&1 >> \"\$DIR/logs/node.log\""
+echo "end script"
+echo ""
+
+echo "#"
+echo "# end"
+echo "#"

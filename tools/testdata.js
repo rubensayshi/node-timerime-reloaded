@@ -77,10 +77,10 @@ for (var c = 0; c < cats; c++) {
 	});
 }
 
-console.log("done calling all inserts... ("+(new Date().getTime() - start)+")");
+console.log("done calling all inserts... ["+(new Date().getTime() - start)+"ms]");
 
 setInterval(function() {
-	console.log("--"+(new Date().getTime() - start)+"-- \ninsert ["+insert+"] \nerror ["+error+"] \nwaiting for ["+(send - error - insert)+"]");
+	console.log("--["+(new Date().getTime() - start)+"ms]-- \ninsert ["+insert+"] \nerror ["+error+"] \nwaiting for ["+(send - error - insert)+"]");
 	if(error + insert == send) {
 		console.log("done");
 		process.exit(0);

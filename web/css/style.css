@@ -84,6 +84,12 @@ h3								{ font-size: 150% }
 .editables_container .editables_admin	{ position: absolute; top: 5px; right: 5px; }
 
 /*
+ * timeline flash element styling
+ */
+.site_timerime_flash			{ line-height: 90px; height: 100px; -moz-border-radius: 5px; -webkit-border-radius: 5px; border: 1px solid #36393D; background-color: #36393D;
+								  color: gray; font-family: 'aller-display'; font-weight: bold; text-align: center; font-size: 25px; margin-bottom: 5px; }
+
+/*
  * block styling
  */
 .block 							{ min-height: 100px; -moz-border-radius: 5px; -webkit-border-radius: 5px; border: 1px solid #36393D; background-color: #CDEB8B;
@@ -94,11 +100,6 @@ h3								{ font-size: 150% }
 .block .header 					{ padding: 5px; background-color: #6BBA70; border-bottom: 1px solid #36393D; }
 .block .content 				{ padding: 5px; }
 
-/*
- * timeline flash element styling
- */
-.timerime_flash					{ line-height: 90px; height: 100px; width: 670px; -moz-border-radius: 5px; -webkit-border-radius: 5px; border: 1px solid #36393D; background-color: #36393D;
-								  color: gray; font-family: 'aller-display'; font-weight: bold; text-align: center; font-size: 25px; }
 /*
  * timeline list styling (homepage etc)
  */

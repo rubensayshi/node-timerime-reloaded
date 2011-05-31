@@ -7,33 +7,12 @@ var sys 			= require('sys'),
 mongoose.connect('mongodb://localhost/timerime-reloaded');
 
 // load models
-require('../models/Category.js');
-require('../models/MenuItem.js');
-require('../models/User.js');
-require('../models/Timeline.js');
-require('../models/TimelineItem.js');
+require('../schema/schema');
 
 Category		= mongoose.model('Category');
 User			= mongoose.model('User');
 Timeline		= mongoose.model('Timeline');
 TimelineItem 	= mongoose.model('TimelineItem');
-
-console.log('init done ..');
-
-var cat = new Category();
-cat.title = 'Category x';
-
-timeline = new Timeline();
-timeline.title = 'Timeline x';
-timeline.categories.push(cat);
-
-console.log('save ..');
-
-timeline.save();
-cat.save();
-
-return;
-
 
 var cats	= 15;
 var users	= 10;

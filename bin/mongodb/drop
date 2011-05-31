@@ -1,0 +1,3 @@
+#!/bin/sh
+
+mongo timerime-reloaded --eval "db.dropDatabase()"

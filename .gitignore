@@ -3,3 +3,4 @@
 .settings
 vendor/*
 node_modules/*
+logs/*

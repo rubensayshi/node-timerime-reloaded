@@ -50,9 +50,9 @@ var Timeline = new Schema({
 	title		: String,
 	slug		: String,
 	body		: String,
-	author		: ObjectId,
-	categories	: [ObjectId],
-	coauthors	: [ObjectId],
+	author_id	: ObjectId,
+	category_ids: [ObjectId],
+	coauthor_ids: [ObjectId],
 	created		: Date,
 	updated		: Date,
 	rating		: Number
@@ -75,7 +75,7 @@ Timeline.pre('save', function(next) {
 	 * set updated
 	 */
 	this.updated = new Date();
-	
+
     next();
 });
 
@@ -88,10 +88,10 @@ var TimelineItem = new Schema({
 	slug		: String,
 	title		: String,
 	body		: String,
-	author		: ObjectId,
+	author_id	: ObjectId,
 	created		: Date,
 	updated		: Date,
-	timeline	: ObjectId
+	timeline_id	: ObjectId
 });
 
 TimelineItem.pre('save', function (next) {

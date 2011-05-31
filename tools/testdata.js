@@ -41,17 +41,17 @@ for (var c = 0; c < cats; c++) {
 		
 		for (var t = 0; t < tls; t++) {
 			var timeline = new Timeline();
-			timeline.title	= 'Timeline #'+c+' #'+u+' #'+t;
-			timeline.body	= lipsum();
-			timeline.author = user;
-			timeline.categories.push(cat);
-			timeline.rating	= (Math.random()*10);
+			timeline.title		= 'Timeline #'+c+' #'+u+' #'+t;
+			timeline.body		= lipsum();
+			timeline.author_id	= user;
+			timeline.category_ids.push(cat);
+			timeline.rating		= (Math.random()*10);
 			
 			for (var i = 0; i < tlis; i++) {
 				var item = new TimelineItem();
 				item.title		= 'TimelineItem #'+c+' #'+u+' #'+t+' #'+i;
 				item.body		= lipsum();
-				item.timeline 	= timeline;
+				item.timeline_id= timeline;
 				
 				send++;
 				item.save(function (err) {

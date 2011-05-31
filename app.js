@@ -4,11 +4,7 @@ var sys 			= require('sys'),
     mongoose		= require('mongoose');
 
 // load models
-require('./models/Category');
-require('./models/MenuItem');
-require('./models/User');
-require('./models/Timeline');
-require('./models/TimelineItem');
+require('./schema/schema');
 
 // load custom modules
 var core			= require('./lib/core'),

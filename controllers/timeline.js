@@ -26,6 +26,7 @@ timelinesColl.args = function(_cond, _fields, _options, _callback)
 	
 	return [cond, fields, options, callback];
 };
+
 timelinesColl.find = function(_cond, _fields, _options, _finish)
 {
 	// normalize the args
@@ -39,10 +40,26 @@ timelinesColl.find = function(_cond, _fields, _options, _finish)
 		},
 		function(timelines) {
 			async.map(timelines, function(timeline, callback) {
-				callback(null, timeline);
+				User.findById(timeline.author_id, function(error, doc) {
+					timeline.author = doc;
+					callback(error, timeline);
+				});
 			}, function(error) {
 				callback(error, timelines);
 			});
+		}
+	], finish);
+};
+
+timelinesColl.findOne = function(_cond, _fields, _options, _finish)
+{
+	// normalize the args
+	var args = this.args(_cond, _fields, _options, _finish);
+	cond = args[0], fields = args[1], options = args[2], finish = args[3];
+		
+	async.waterfall([
+		function(callback) {
+			Timeline.findOne(cond, fields, options, callback);
 		}
 	], finish);
 };
@@ -84,25 +101,47 @@ timelinesColl.recentupdated = function(_cond, _fields, _options, _callback)
 };
 
 var categoriesColl = {};
-categoriesColl.find = function(_cond, _fields, _options, _callback)
-{
-
+categoriesColl.args = function(_cond, _fields, _options, _callback)
+{	
 	if("function" == typeof _cond) 
 		 _callback = _cond, _cond = null, _fields = null, _options = null;
 	else if("function" == typeof _fields) 
 		_callback = _fields, _fields = null, _options = null;
 	else if("function" == typeof _options) 
 		_callback = _options, _options = null;
-	
+
 	cond			= _cond				|| {};
 	fields			= _fields			|| [];
 	options			= _options			|| {};
+	callback		= _callback			|| null;
+	
+	return [cond, fields, options, callback];
+};
+
+categoriesColl.findOne = function(_cond, _fields, _options, _finish)
+{
+	// normalize the args
+	var args = this.args(_cond, _fields, _options, _finish);
+	cond = args[0], fields = args[1], options = args[2], finish = args[3];
+		
+	async.waterfall([
+		function(callback) {
+			Category.findOne(cond, fields, options, callback);
+		}
+	], finish);
+};
+
+categoriesColl.find = function(_cond, _fields, _options, _finish)
+{
+	// normalize the args
+	var args = this.args(_cond, _fields, _options, _finish);
+	cond = args[0], fields = args[1], options = args[2], finish = args[3];
 	
 	async.waterfall([
 		function(callback) {
 			Category.find(cond, fields, options, callback);
 		}
-	], _callback);
+	], finish);
 };
 
 module.exports = exports = function(app) {	
@@ -114,15 +153,15 @@ module.exports = exports = function(app) {
      		},
      		function(categories, callback) {
      			// fetch popular
-     			timelinesColl.popular({}, [], {limit : 16}, function(error, docs) { callback(error, categories, docs); });
+     			timelinesColl.popular({}, [], {limit : 8}, function(error, docs) { callback(error, categories, docs); });
      		},
      		function(categories, popular, callback) {
      			// fetch newcreated
-     			timelinesColl.newcreated({}, [], {limit : 8}, function(error, docs) { callback(error, categories, popular, docs); });
+     			timelinesColl.newcreated({}, [], {limit : 4}, function(error, docs) { callback(error, categories, popular, docs); });
      		},
      		function(categories, popular, newcreated, callback) {
      			// fetch recentupdated
-     			timelinesColl.recentupdated({}, [], {limit : 8}, function(error, docs) { callback(error, categories, popular, newcreated, docs); });
+     			timelinesColl.recentupdated({}, [], {limit : 4}, function(error, docs) { callback(error, categories, popular, newcreated, docs); });
      		}
      	], function(error, categories, popular, newcreated, recentupdated) {
 			core.render('homepage.html', {
@@ -141,47 +180,44 @@ module.exports = exports = function(app) {
 	});
 	
 	app.get('/timelines/:category_slug', function(req, res) {
-		Category.find({slug : req.params['category_slug']}, function(error, docs) {
-			if(docs && docs.length) {
-				category = docs.shift();
-				Timeline.find({categories : category}, function(error, docs) {	
-					if(docs && docs.length) {			
-						core.render('category.html', {category : category, timelines : docs}, function (error, result) {
-					        if (error) {
-					            console.log(error);
-					        } else {
-					        	res.send(result);
-					        }
-					    });						
-					} else {
-			            console.log('no timelines found in category');
-					}
-			    });
-				
-			} else {
-		        console.log('no category found');
-			}
-		});
+		async.waterfall([
+      		function(callback) {
+      			// fetch category
+      			categoriesColl.findOne({slug : req.params['category_slug']}, callback);
+      		},
+      		function(category, callback) {
+      			// fetch timelines
+      			timelinesColl.find({category_ids: category._id}, [], {limit : 16}, function(error, docs) { callback(error, category, docs); });
+      		}
+      	], function(error, category, timelines) {
+ 			core.render('category.html', {category : category, timelines : timelines}, function (error, result) {
+ 		        if (error) {
+ 		            console.log(error);
+ 		        } else {
+ 		        	res.send(result);
+ 		        }
+ 		    });		
+ 		});
 	});
 	
 	app.get('/timeline/:timeline_slug', function(req, res) {
-		Timeline.find({slug : req.params['timeline_slug']}, function(error, docs) {
-			if(docs && docs.length) {
-				timeline = docs.shift();
-				User.findById(timeline.author, function(error, doc) {
-					if(doc) {
-						core.render('timeline.html', {timeline : timeline, author: doc}, function (error, result) {
-					        if (error) {
-					            console.log(error);
-					        } else {
-					        	res.send(result);
-					        }
-					    });	
-					}
-				});			
-			} else {
-	            console.log('no timeline found');
-			}
-		});
+		async.waterfall([
+       		function(callback) {
+       			// fetch timeline
+       			timelinesColl.findOne({slug : req.params['timeline_slug']}, callback);
+       		},
+       		function(timeline, callback) {
+       			// fetch timeline-items
+       			callback(null, timeline, []);
+       		}
+       	], function(error, timeline, timelineItems) {
+  			core.render('timeline.html', {timeline : timeline, timelineItems : timelineItems}, function (error, result) {
+  		        if (error) {
+  		            console.log(error);
+  		        } else {
+  		        	res.send(result);
+  		        }
+  		    });		
+  		});
 	});
 };

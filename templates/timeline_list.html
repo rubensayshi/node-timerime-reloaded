@@ -1,0 +1,13 @@
+<ul class="timeline_list">
+	{% for timeline in timelines %}
+		<li>
+			<a href="/timeline/{{ timeline.slug }}">
+				<div class="image_placeholder">&lt;img /&gt;</div>
+			</a>
+			<div class="timeline_info">
+				<a class="title" href="/timeline/{{ timeline.slug }}">{{ timeline.title }}</a>
+				<a class="author" href="">{{ timeline.author.username }}</a>
+			</div>
+		</li>
+	{% endfor %}
+</ul>

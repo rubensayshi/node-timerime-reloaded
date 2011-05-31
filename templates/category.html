@@ -1,12 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>{{ category.title }}</h2>
-<ul>
-	{% for timeline in timelines %}
-		<li>
-			<a href="/timeline/{{ timeline.slug }}">{{ timeline.title }}</a>
-		</li>
-	{% endfor %}
-</ul>
+<div class="block two-col">
+	<div class="header">Timelines in category `{{ category.title }}`</div>
+	<div class="content">
+		{% include "timeline_list.html" %}
+	</div>
+</div>
 {% endblock %}

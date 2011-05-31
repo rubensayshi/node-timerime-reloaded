@@ -16,7 +16,7 @@ TimelineItem 	= mongoose.model('TimelineItem');
 
 var cats	= 15;
 var users	= 10;
-var tls		= 20;
+var tls		= 10;
 var tlis	= 10;
 
 var send	= 0;
@@ -89,4 +89,4 @@ setInterval(function() {
 	{
 		console.log("not done");
 	}
-}, 500);
+}, 1000);

@@ -6,44 +6,27 @@
 <div class="block two-col">
 	<div class="header">Most popular timelines</div>
 	<div class="content">
-		<ul class="timeline_list">
-			{% for timeline in popular %}
-				<li>
-					<div class="image-placeholder"></div>
-					<div class="timeline_info">
-						<a class="title" href="/timeline/{{ timeline.slug }}">{{ timeline.title }}</a>
-						<a class="author" href="">{{ timeline.author.username }}</a>
-					</div>
-					
-				</li>
-			{% endfor %}
-		</ul>
+		{% with popular as timelines %}
+			{% include "timeline_list.html" %}
+		{% endwith %}
 	</div>
 </div>
 
 <div class="block left">
 	<div class="header">New timelines</div>
 	<div class="content">
-		<ul class="timeline_list">
-			{% for timeline in newcreated %}
-				<li>
-					{{ timeline.title }}
-				</li>
-			{% endfor %}
-		</ul>
+		{% with newcreated as timelines %}
+			{% include "timeline_list.html" %}
+		{% endwith %}
 	</div>
 </div>
 
 <div class="block right">
 	<div class="header">Recently changed timelines</div>
 	<div class="content">
-		<ul class="timeline_list">
-			{% for timeline in recentupdated %}
-				<li>
-					{{ timeline.title }}
-				</li>
-			{% endfor %}
-		</ul>
+		{% with recentupdated as timelines %}
+			{% include "timeline_list.html" %}
+		{% endwith %}
 	</div>
 </div>
 

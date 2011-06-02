@@ -74,6 +74,8 @@ for (var ch = 0; ch < chnls; ch++) {
 					item.title		= 'TimelineItem #'+c+' #'+u+' #'+t+' #'+i;
 					item.body		= lipsum();
 					item.timeline_id= timeline;
+					item.start_date	= new Date();
+					item.end_date	= new Date();
 					
 					send++;
 					item.save(function (err) {

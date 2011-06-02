@@ -59,6 +59,12 @@ timelines.findOne = function(_cond, _fields, _options, _finish)
 	async.waterfall([
 		function(callback) {
 			Timeline.findOne(cond, fields, options, callback);
+		},
+		function(timeline) {
+			User.findById(timeline.author_id, function(error, doc) {
+				timeline.author = doc;
+				callback(error, timeline);
+			});
 		}
 	], finish);
 };

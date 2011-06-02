@@ -72,10 +72,33 @@ module.exports = exports = function(app) {
        		},
        		function(timeline, callback) {
        			// fetch timeline-items
-       			callback(null, timeline, []);
+       			TimelineItem.find({timeline_id : timeline}, [], {sort : {start_date: 1}}, function(error, docs) {
+       				callback(error, timeline, docs);
+       			});
        		}
        	], function(error, timeline, timelineItems) {
   			core.render('timeline.html', {timeline : timeline, timelineItems : timelineItems}, function (error, result) {
+  		        if (error) {
+  		            console.log(error);
+  		        } else {
+  		        	res.send(result);
+  		        }
+  		    });		
+  		});
+	});
+	
+	app.get('/timeline_item/:timeline_item_slug', function(req, res) {
+		async.waterfall([
+       		function(callback) {
+       			// fetch timeline_item
+       			TimelineItem.findOne({slug : req.params['timeline_item_slug']}, callback);
+       		},
+       		function(timeline_item, callback) {
+       			// fetch surrounding items I think ?
+       			callback(null, timeline_item, []);
+       		}
+       	], function(error, timelineItem, surrounding) {
+  			core.render('timeline_item.html', {timelineItem : timelineItem}, function (error, result) {
   		        if (error) {
   		            console.log(error);
   		        } else {

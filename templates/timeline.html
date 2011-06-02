@@ -4,7 +4,7 @@
 <div class="block two-col">
 	<div class="header">{{ timeline.title }}</div>
 	<div class="content">
-		<p>by <b>{{ author.username }}</b> on {{ timeline.created }}</p>
+		<p>by <b>{{ timeline.author.username }}</b> on {{ timeline.created }}</p>
 		<p>{{ timeline.body }}</p>
 	</div>
 </div>
@@ -12,7 +12,11 @@
 <div class="block two-col">
 	<div class="header">Items</div>
 	<div class="content">
-		...
+		<ul>
+			{% for timelineItem in timelineItems %}
+				<li><a href="/timeline_item/{{ timelineItem.slug }}">{{ timelineItem.title }}</a></li>
+			{% endfor %}
+		</ul>
 	</div>
 </div>
 {% endblock %}

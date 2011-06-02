@@ -17,15 +17,15 @@ module.exports = exports = function(app) {
      		},
      		function(categories, callback) {
      			// fetch popular
-     			timelines_repo.popular({}, [], {limit : 8}, function(error, docs) { callback(error, categories, docs); });
+     			timelines_repo.find({channel_ids: req.channel}, [], {sort : {rating : -1}, limit : 8}, function(error, docs) { callback(error, categories, docs); });
      		},
      		function(categories, popular, callback) {
      			// fetch newcreated
-     			timelines_repo.newcreated({}, [], {limit : 4}, function(error, docs) { callback(error, categories, popular, docs); });
+     			timelines_repo.find({channel_ids: req.channel}, [], {sort : {created : -1}, limit : 4}, function(error, docs) { callback(error, categories, popular, docs); });
      		},
      		function(categories, popular, newcreated, callback) {
      			// fetch recentupdated
-     			timelines_repo.recentupdated({}, [], {limit : 4}, function(error, docs) { callback(error, categories, popular, newcreated, docs); });
+     			timelines_repo.find({channel_ids: req.channel}, [], {sort : {updated : -1}, limit : 4}, function(error, docs) { callback(error, categories, popular, newcreated, docs); });
      		}
      	], function(error, categories, popular, newcreated, recentupdated) {
 			core.render('homepage.html', {

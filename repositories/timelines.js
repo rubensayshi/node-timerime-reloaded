@@ -30,7 +30,7 @@ timelines.find = function(_cond, _fields, _options, _finish)
 {
 	// normalize the args
 	var args = this.args(_cond, _fields, _options, _finish);
-	cond = args[0], fields = args[1], options = args[2], finish = args[3];
+	var cond = args[0], fields = args[1], options = args[2], finish = args[3];
 
 	
 	async.waterfall([
@@ -54,49 +54,13 @@ timelines.findOne = function(_cond, _fields, _options, _finish)
 {
 	// normalize the args
 	var args = this.args(_cond, _fields, _options, _finish);
-	cond = args[0], fields = args[1], options = args[2], finish = args[3];
+	var cond = args[0], fields = args[1], options = args[2], finish = args[3];
 		
 	async.waterfall([
 		function(callback) {
 			Timeline.findOne(cond, fields, options, callback);
 		}
 	], finish);
-};
-
-timelines.popular = function(_cond, _fields, _options, _callback)
-{
-	// normalize the args
-	var args = this.args(_cond, _fields, _options, _callback);
-	cond = args[0], fields = args[1], options = args[2], callback = args[3];
-
-	// sort DESC on rating
-	options.sort.rating = -1;
-	
-	timelines.find(cond, fields, options, callback);
-};
-
-timelines.newcreated = function(_cond, _fields, _options, _callback)
-{
-	// normalize the args
-	var args = this.args(_cond, _fields, _options, _callback);
-	cond = args[0], fields = args[1], options = args[2], callback = args[3];
-
-	// sort DESC on created
-	options.sort.created = -1;
-	
-	timelines.find(cond, fields, options, callback);
-};
-
-timelines.recentupdated = function(_cond, _fields, _options, _callback)
-{
-	// normalize the args
-	var args = this.args(_cond, _fields, _options, _callback);
-	cond = args[0], fields = args[1], options = args[2], callback = args[3];
-
-	// sort DESC on updated
-	options.sort.updated = -1;
-	
-	timelines.find(cond, fields, options, callback);
 };
 
 exports = module.exports = timelines;

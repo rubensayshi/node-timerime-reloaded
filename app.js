@@ -8,7 +8,8 @@ require('./schema/schema');
 
 // load custom modules
 var core			= require('./lib/core'),
-	menu			= require('./lib/menu');
+	menu			= require('./lib/menu'),
+	channel			= require('./lib/channel');
 
 // initialize other vars
 var	Schema 			= mongoose.Schema,
@@ -21,10 +22,18 @@ mongoose.connect('mongodb://localhost/timerime-reloaded');
 // set template path
 core.template_loader.set_path('templates');
 
+// setup express app
+app.use(express.bodyParser());
+app.use(express.cookieParser());
+app.use(express.session({secret: 'very secret secret'}));
+
 //make static files available
 app.use("/web", express.static(__dirname + '/web'));
 
+app.use('/', channel.init);
+
 // init controllers
+require('./controllers/auth')(app);
 require('./controllers/timeline')(app);
 
 app.get('/about', function(req, res){

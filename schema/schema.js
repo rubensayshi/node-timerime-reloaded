@@ -22,14 +22,33 @@ Category.pre('save', function (next) {
 queue.push(function() { mongoose.model('Category', Category); });
 
 /*
+ * Channel
+ */
+var Channel = new Schema({
+	title		: String,
+	slug		: String
+});
+
+Channel.pre('save', function (next) {
+	this.slug = slugify(this.title);	
+	
+    next();
+});
+
+queue.push(function() { mongoose.model('Channel', Channel); });
+
+/*
  * User
  */
 var User = new Schema({
 	username	: String,
 	email		: String,
 	password	: String,
+	salt		: String,
 	name		: String,
-	created		: Date
+	created		: Date,
+	channel_ids	: [ObjectId],
+	acl			: []
 });
 
 
@@ -52,6 +71,7 @@ var Timeline = new Schema({
 	body		: String,
 	author_id	: ObjectId,
 	category_ids: [ObjectId],
+	channel_ids	: [ObjectId],
 	coauthor_ids: [ObjectId],
 	created		: Date,
 	updated		: Date,

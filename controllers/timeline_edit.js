@@ -31,8 +31,12 @@ module.exports = exports = function(app) {
       			} else {
       				callback(new Error('Access denied'));
       			}
-      		}], function(timeline) {
-				core.render('timeline_edit.html', {timeline: timeline}, res);
+      		}], function(error, timeline) {
+				if(error) {
+					core.render('plain.html', {header: 'Error', content: error.message}, res);
+				} else {
+					core.render('timeline_edit.html', {timeline: timeline}, res);
+				}
 			}
 		);
 	});

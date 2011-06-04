@@ -19,17 +19,17 @@ module.exports = exports = function(app) {
 			}
 		});
 	});
-	app.get('/timeline/edit/:timeline_slug', auth.restrict, function(req, res, next) {
+	app.get('/timeline/edit/:timeline_slug', auth.restrict, function(req, res) {
 		async.waterfall([
       		function(callback) {
       			// fetch categories
       			timelines_repo.findOne({slug : req.params['timeline_slug']}, callback);
       		},
       		function(timeline, callback) {
-      			if(auth.check_acl(req.session.user, {edit_timeline: timeline._id.toString() })) {
-      				next(null, timeline);
+      			if(auth.check_acl(req.session.user, JSON.stringify({edit_timeline: timeline._id}))) {
+      				callback(null, timeline);
       			} else {
-      				next(new Error('Access denied'));
+      				callback(new Error('Access denied'));
       			}
       		}], function(timeline) {
 				core.render('timeline_edit.html', {timeline: timeline}, res);

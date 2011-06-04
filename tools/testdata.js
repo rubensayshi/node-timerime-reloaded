@@ -52,26 +52,32 @@ for (var ch = 0; ch < chnls; ch++) {
 		
 	for (var u = 0; u < users; u++) {
 		var user = new User();
-		user.username 	= 'User #'+c+' #'+u;
-		user.salt 		= passwd.salt();
-		user.password 	= passwd.md5( 'user' + user.salt );
+		if (u == 0 && ch == 0) {
+			user.username 	= 'ruben';
+			user.salt 		= passwd.salt();
+			user.password 	= passwd.md5( 'ruben' + user.salt );
+		} else {
+			user.username 	= 'User #'+ch+' #'+u;
+			user.salt 		= passwd.salt();
+			user.password 	= passwd.md5( 'user' + user.salt );
+		}
 		user.channel_ids.push(channel);
 		user.acl 		= [];
 		
 		for(var cat in catsarr) {
 			for (var t = 0; t < tls; t++) {
 				var timeline = new Timeline();
-				timeline.title		= 'Timeline #'+c+' #'+u+' #'+t;
+				timeline.title		= 'Timeline #'+ch+' #'+u+' #'+t;
 				timeline.body		= lipsum();
 				timeline.author_id	= user;
 				timeline.category_ids.push(cat);
 				timeline.channel_ids.push(channel);
 				timeline.rating		= (Math.random()*10);
-				user.acl.push({edit_timeline: timeline._id});
+				user.acl.push(JSON.stringify({edit_timeline: timeline._id}));
 				
 				for (var i = 0; i < tlis; i++) {
 					var item = new TimelineItem();
-					item.title		= 'TimelineItem #'+c+' #'+u+' #'+t+' #'+i;
+					item.title		= 'TimelineItem #'+ch+' #'+u+' #'+t+' #'+i;
 					item.body		= lipsum();
 					item.timeline_id= timeline;
 					item.start_date	= new Date();

@@ -4,7 +4,7 @@ var crypto			= require('crypto'),
 
 exports = module.exports = function(app) {		
 	app.get('/restricted', auth.acl({nom: 'cookie'}), function(req, res) {
-		res.send('Wahoo! restricted area');
+		core.render('plain.html', {header: 'Restricted', content: 'Wahoo! restricted area'}, res);
 	});
 	
 	app.get('/logout', function(req, res) {
@@ -17,17 +17,11 @@ exports = module.exports = function(app) {
 	
 	app.get('/login', function(req, res) {
 		if (req.session.user) {
-			res.send('Already authenticated as ' + req.session.user.username);
+			core.render('plain.html', {header: 'Login', content: 'Already authenticated as ' + req.session.user.username}, res);
 		}
 		else
 		{
-			core.render('login.html', {}, function (error, result) {
-				if (error) {
-					console.log(error);
-				} else {
-					res.send(result);
-				}
-			});
+			core.render('login.html', {}, res);
 		}
 	});
 	
@@ -44,7 +38,7 @@ exports = module.exports = function(app) {
 					res.redirect('back');
 				});
 			} else {
-				res.send('Authentication failed, please check your username and password.');
+				core.render('plain.html', {header: 'Login', content: 'Authentication failed, please check your username and password.'}, res);
 			}
 		});
 	});

@@ -21,7 +21,11 @@
     		
     		<div class="site_content">
     			<div class="site_content-inner">{% block content %}{% endblock %}</div>
-    			<div class="site_content-sidebar">[sidebar]</div>
+    			<div class="site_content-sidebar">
+    				<div class="menu">
+    					{{ menu.secondary|safe }}
+    				</div>
+    			</div>
     			<br style="clear: both" />
     		</div>
     	</div>        

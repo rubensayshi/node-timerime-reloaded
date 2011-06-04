@@ -22,6 +22,9 @@ mongoose.connect('mongodb://localhost/timerime-reloaded');
 // set template path
 core.template_loader.set_path('templates');
 
+// disable template cache
+core.template_loader.disableCache();
+
 // setup express app
 app.use(express.bodyParser());
 app.use(express.cookieParser());
@@ -35,6 +38,7 @@ app.use('/', channel.init);
 // init controllers
 require('./controllers/auth')(app);
 require('./controllers/timeline')(app);
+require('./controllers/timeline_edit')(app);
 
 app.get('/about', function(req, res){
 	core.render('about.html', {}, function (error, result) {

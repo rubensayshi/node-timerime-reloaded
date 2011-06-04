@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="block two-col">
+	<div class="header">My Timerime</div>
+	<div class="content mytimerime">
+		<ul>
+			{% for timeline in mytimelines %}
+			<li>
+				<a href="/timeline/{{ timeline.slug }}">{{ timeline.title }}</a>
+				<div class="admin">
+					<a href="/timeline/edit/{{ timeline.slug }}">edit</a>
+					<a href="/timeline/delete/{{ timeline.slug }}">delete</a>
+				</div>
+			</li>
+			{% endfor %}
+			
+			<li></li>
+			<li><a href="/timeline/new">new</a></li>
+		</ul>
+	</div>
+</div>
+{% endblock %}

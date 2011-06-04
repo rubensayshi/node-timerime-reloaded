@@ -48,7 +48,7 @@ var User = new Schema({
 	name		: String,
 	created		: Date,
 	channel_ids	: [ObjectId],
-	acl			: []
+	acl			: [String]
 });
 
 

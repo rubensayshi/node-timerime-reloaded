@@ -135,3 +135,14 @@ ul.category_list li						{ float: left; display: block; width: 220px; }
 .timeline .prev_next_nav				{ margin-top: 20px; height: 15px; padding: 5px; }
 .timeline .prev_next_nav .prev			{ height: 15px; float: left; width: 50%; text-align: left; }
 .timeline .prev_next_nav .next			{ height: 15px; float: right; width: 50%; text-align: right; }
+
+/*
+ * form styling
+ */
+form .row								{ margin-top: 10px; }
+form .row.submit						{ margin-top: 50px; text-align: right; }
+form .row label							{ font-weight: bold; font-size: 14px; margin: 5px 0px 5px 3px; font-family: 'MEgalopolisExtra'; }
+form .row input, textarea				{ -moz-border-radius: 5px; -webkit-border-radius: 5px;border: 1px solid #36393D; background-color: #36393D; color: gray;
+										  width: 650px; padding: 4px; }
+form .row textarea						{ min-height: 200px; }
+form .row .button						{ cursor: pointer; color: #36393D; background-color: gray; width: auto; padding: 4px 10px; font-family: 'MEgalopolisExtra'; font-size: 16px; }

@@ -22,9 +22,14 @@
     		<div class="site_content">
     			<div class="site_content-inner">{% block content %}{% endblock %}</div>
     			<div class="site_content-sidebar">
-    				<div class="menu">
-    					{{ menu.secondary|safe }}
+    				{% block sidebar_top %}{% endblock %}
+    				<div class="block">
+						<div class="header">My Timerime</div>
+						<div class="content menu">
+    						{{ menu.secondary|safe }}
+    					</div>
     				</div>
+    				{% block sidebar_bottom %}{% endblock %}
     			</div>
     			<br style="clear: both" />
     		</div>

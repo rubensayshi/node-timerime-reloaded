@@ -2,14 +2,21 @@
 
 {% block content %}
 <div class="block two-col">
-	<div class="header">{{ timeline.title }}</div>
-	<div class="content">
-		<p>by <b>{{ timeline.author.username }}</b> on {{ timeline.created }}</p>
-		<p>{{ timeline.body }}</p>
+	<div class="header">[EDIT] {{ timeline.title }}</div>
+	<div class="content timeline">
+		<div class="intro">
+			by <b>{{ timeline.author.username }}</b> on {{ timeline.created }}
+		</div>
+		<div class="body">{{ timeline.body }}</div>
+		<div class="prev_next_nav">
+			<a href="/timeline_item/{{ timelineItems.0.slug }}" class="next">{{ timelineItems.0.title }} >></a>
+		</div>
 	</div>
 </div>
+{% endblock %}
 
-<div class="block two-col">
+{% block sidebar_top %}
+<div class="block">
 	<div class="header">Items</div>
 	<div class="content">
 		<ul>

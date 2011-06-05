@@ -11,6 +11,8 @@
 		<div class="prev_next_nav">
 			{% if prev %}
 				<a href="/timeline_item/{{ prev.slug }}" class="prev"><< {{ prev.title }}</a>
+			{% else %}
+				<a href="/timeline/{{ timelineItem.timeline.slug }}" class="prev"><< {{ timelineItem.timeline.title }}</a>			
 			{% endif %}
 			{% if next %}
 			<a href="/timeline_item/{{ next.slug }}" class="next">{{ next.title }} >></a>

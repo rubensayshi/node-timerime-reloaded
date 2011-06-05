@@ -73,7 +73,7 @@ module.exports = exports = function(app) {
        		},
        		function(timeline, callback) {
        			// fetch timeline-items
-       			TimelineItem.find({timeline_id : timeline}, [], {sort : {start_date: 1}}, function(error, docs) {
+       			TimelineItem.find({timeline_id : timeline}, function(error, docs) {
        				callback(error, timeline, docs);
        			});
        		}

@@ -54,7 +54,7 @@ html[xmlns] .clearfix {
 /*
  * basic website layout styling
  */
-body 							{ font-family: verdana, helvetica, arial, sans-serif; font-size: 12px; margin: 5px; background-color: #F9F7ED; color: #36393D; }
+body 							{ font-family: verdana, helvetica, arial, sans-serif; font-size: 12px; margin: 5px; background-color: #F9F7ED; color: #36393D; overflow-x: auto; overflow-y: scroll; }
 @font-face 						{ font-family: 'MEgalopolisExtra'; src: url('../fonts/MEgalopolisExtra.otf'); }  
 @font-face 						{ font-family: 'MEgalopolisExtra'; src: url('../fonts/MEgalopolisExtra.otf'); font-weight: bold; }  
 a, a:visited					{ color: #36393D; font-decoration: underline; }
@@ -67,7 +67,7 @@ h1, h2, h3						{ font-family: 'MEgalopolisExtra'; font-weight: bold; }
 h1								{ font-size: 200%; letter-spacing: 10px; }
 h2								{ font-size: 175% }
 h3								{ font-size: 150% }
-.site_container					{ width: 900px; margin: 0 auto; height: 100%; }
+.site_container					{ width: 1000px; margin: 0 auto; height: 100%; }
 .site_header					{ height: 60px; background-color: #6BBA70; -moz-border-radius: 5px; -webkit-border-radius: 5px; border: 1px solid #36393D; color: #36393D;
 								  margin-bottom: 5px; }
 .site_header .menu ul			{ list-style: none; padding: 0 10px; }
@@ -75,8 +75,8 @@ h3								{ font-size: 150% }
 .site_header .menu ul li a		{ font-family: 'MEgalopolisExtra'; font-weight: normal; font-size: 14px; text-decoration: none; }
 .site_title						{ padding: 10px 0px; height: 20px; text-align: center; }
 .site_content					{ min-height: 500px; -moz-border-radius: 5px; -webkit-border-radius: 5px; border: 1px solid #36393D; background-color: #CDEB8B; }
-.site_content-inner				{ width: 670px; float: left; min-height: 500px; padding: 10px;  }
-.site_content-sidebar			{ width: 179px; float: left; border-left: 1px solid #36393D; min-height: 500px; padding: 10px; }
+.site_content-inner				{ width: 670px; float: left; min-height: 500px; padding: 10px; }
+.site_content-sidebar			{ width: 295px; float: left; min-height: 500px; padding: 10px 10px 10px 0px; }
 .site_content-sidebar .menu ul	{ list-style: dotted; margin: 10px 0px 0px 0px; }
 .site_content-sidebar .menu ul li{ margin: 0px 0px 0px 15px; }
 .clearfix						{ clear: both; height: 0px; }
@@ -98,6 +98,7 @@ h3								{ font-size: 150% }
 .block.left						{ margin-right: 5px; clear: both; }
 .block.right					{ }
 .block.two-col 					{ width: 670px; clear: both; }
+.site_content-sidebar .block	{ width: 295px; clear: both; }
 .block .header 					{ padding: 5px; background-color: #6BBA70; border-bottom: 1px solid #36393D; font-family: 'MEgalopolisExtra'; font-size: 14px; height: 16px; }
 .block .content 				{ padding: 5px; }
 

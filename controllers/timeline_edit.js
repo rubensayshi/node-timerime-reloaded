@@ -10,12 +10,12 @@ var core			= require('../lib/core'),
 	categories_repo	= require('../repositories/categories');
 
 module.exports = exports = function(app) {	
-	app.get('/my_timerime', auth.restrict, function(req, res, next) {	
+	app.get('/my_timelines', auth.restrict, function(req, res, next) {	
 		timelines_repo.find({author_id : req.session.user._id}, function(error, docs) {
 			if(error) {
 				next(error);
 			} else {
-				core.render('my_timerime.html', {mytimelines: docs}, res);
+				core.render('my_timelines.html', {mytimelines: docs}, res);
 			}
 		});
 	});
@@ -31,11 +31,18 @@ module.exports = exports = function(app) {
       			} else {
       				callback(new Error('Access denied'));
       			}
-      		}], function(error, timeline) {
+      		},
+      		function(timeline, callback) {
+       			// fetch timeline-items
+       			TimelineItem.find({timeline_id : timeline}, function(error, docs) {
+       				callback(error, timeline, docs);
+       			});
+      		}
+      		], function(error, timeline, timelineItems) {
 				if(error) {
 					core.render('plain.html', {header: 'Error', content: error.message}, res);
 				} else {
-					core.render('timeline_edit.html', {timeline: timeline}, res);
+					core.render('timeline_edit.html', {timeline: timeline, timelineItems : timelineItems}, res);
 				}
 			}
 		);

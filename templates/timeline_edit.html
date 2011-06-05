@@ -4,12 +4,21 @@
 <div class="block two-col">
 	<div class="header">[EDIT] {{ timeline.title }}</div>
 	<div class="content timeline">
-		<div class="intro">
-			by <b>{{ timeline.author.username }}</b> on {{ timeline.created }}
-		</div>
-		<div class="body">{{ timeline.body }}</div>
-		<div class="prev_next_nav">
-			<a href="/timeline_item/edit/{{ timelineItems.0.slug }}" class="next">{{ timelineItems.0.title }} >></a>
+		<div class="body">
+			<form action="/timeline/save/{{ timeline.slug }}" method="POST">
+				<div class="row">
+					<label for="timeline[title]">Title:</label>
+					<input type="text" name="timeline[title]" id="timeline[title]" value="{{ timeline.title }}" />
+				</div>
+				<div class="row">
+					<label for="timeline[body]">Body:</label>
+					<textarea name="timeline[body]" id="timeline[body]">{{ timeline.body|safe }}</textarea>
+				</div>
+				<div class="row submit">
+					<input class="button" type="button" value="cancel / reset" onclick="window.location.href='/my_timelines';" />
+					<input class="button" type="submit" value="save" />
+				</div>
+			</form>
 		</div>
 	</div>
 </div>

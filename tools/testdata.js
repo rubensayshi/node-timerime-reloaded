@@ -4,6 +4,10 @@ var sys 			= require('sys'),
 	lipsum			= require('../utils/lipsum'),
 	passwd			= require('../lib/passwd');
 
+// handle CLI args
+args 	= process.argv.splice(2);
+silent	= (args.indexOf('-s') != -1);
+
 //connect database
 mongoose.connect('mongodb://localhost/timerime-reloaded');
 
@@ -28,13 +32,15 @@ var insert	= 0;
 var error	= 0;
 var start	= new Date().getTime();
 
-console.log("this might take a while (about 1~1.5 ms / item) ...");
-console.log("inserting testdata ...");
-console.log(chnls						+ " channels");
-console.log(cats						+ " categories");
-console.log((chnls*users)				+ " users");
-console.log((chnls*cats*users*tls)		+ " timelines");
-console.log((chnls*cats*users*tls*tlis)	+ " timeline-items");
+if(!silent) {
+	console.log("this might take a while (about 1~1.5 ms / item) ...");
+	console.log("inserting testdata ...");
+	console.log(chnls						+ " channels");
+	console.log(cats						+ " categories");
+	console.log((chnls*users)				+ " users");
+	console.log((chnls*cats*users*tls)		+ " timelines");
+	console.log((chnls*cats*users*tls*tlis)	+ " timeline-items");
+}
 
 for (var c = 0; c < cats; c++) {
 	catsarr[c] = new Category();
@@ -108,16 +114,16 @@ for (var ch = 0; ch < chnls; ch++) {
 	});
 }
 
-console.log("done calling all inserts... ["+(new Date().getTime() - start)+"ms]");
+if(!silent) console.log("done calling all inserts... ["+(new Date().getTime() - start)+"ms]");
 
 setInterval(function() {
-	console.log("--["+(new Date().getTime() - start)+"ms]-- \ninsert ["+insert+"] \nerror ["+error+"] \nwaiting for ["+(send - error - insert)+"]");
+	if(!silent) console.log("--["+(new Date().getTime() - start)+"ms]-- \ninsert ["+insert+"] \nerror ["+error+"] \nwaiting for ["+(send - error - insert)+"]");
 	if(error + insert == send) {
 		console.log("done");
 		process.exit(0);
 	}
 	else
 	{
-		console.log("not done");
+		if(!silent) console.log("not done");
 	}
 }, 1000);

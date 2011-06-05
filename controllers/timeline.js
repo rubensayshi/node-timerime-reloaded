@@ -1,10 +1,6 @@
 var core				= require('../lib/core'),
 	mongoose			= require('mongoose'),
 	async				= require('async'),
-	User	 			= mongoose.model('User'),
-	Category 			= mongoose.model('Category'),
-	Timeline 			= mongoose.model('Timeline'),
-	TimelineItem		= mongoose.model('TimelineItem'),
 	timelines_repo		= require('../repositories/timelines'),
 	timeline_items_repo	= require('../repositories/timeline_items'),
 	categories_repo		= require('../repositories/categories');
@@ -73,7 +69,7 @@ module.exports = exports = function(app) {
        		},
        		function(timeline, callback) {
        			// fetch timeline-items
-       			TimelineItem.find({timeline_id : timeline}, function(error, docs) {
+       			timeline_items_repo.find({timeline_id : timeline}, function(error, docs) {
        				callback(error, timeline, docs);
        			});
        		}

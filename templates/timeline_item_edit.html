@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="block two-col">
+	<div class="header">[EDIT] {{ timelineItem.title }}</div>
+	<div class="content timeline timeline_item">
+		<div class="intro">
+			by <b>{{ timelineItem.timeline.author.username }}</b> on {{ timelineItem.timeline.created }}
+		</div>
+		<div class="body">{{ timelineItem.body }}</div>
+		<div class="prev_next_nav">
+			{% if prev %}
+				<a href="/timeline_item/edit/{{ prev.slug }}" class="prev"><< {{ prev.title }}</a>
+			{% else %}
+				<a href="/timeline/edit/{{ timelineItem.timeline.slug }}" class="prev"><< {{ timelineItem.timeline.title }}</a>			
+			{% endif %}
+			{% if next %}
+			<a href="/timeline_item/edit/{{ next.slug }}" class="next">{{ next.title }} >></a>
+			{% endif %}
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block sidebar_top %}
+<div class="block">
+	<div class="header">Items</div>
+	<div class="content">
+		<ul>
+			{% for timelineItem in timelineItems %}
+				<li><a href="/timeline_item/edit/{{ timelineItem.slug }}">{{ timelineItem.title }}</a></li>
+			{% endfor %}
+		</ul>
+	</div>
+</div>
+{% endblock %}

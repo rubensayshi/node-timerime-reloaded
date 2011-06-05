@@ -9,7 +9,7 @@
 		</div>
 		<div class="body">{{ timeline.body }}</div>
 		<div class="prev_next_nav">
-			<a href="/timeline_item/{{ timelineItems.0.slug }}" class="next">{{ timelineItems.0.title }} >></a>
+			<a href="/timeline_item/edit/{{ timelineItems.0.slug }}" class="next">{{ timelineItems.0.title }} >></a>
 		</div>
 	</div>
 </div>
@@ -21,7 +21,7 @@
 	<div class="content">
 		<ul>
 			{% for timelineItem in timelineItems %}
-				<li><a href="/timeline_item/{{ timelineItem.slug }}">{{ timelineItem.title }}</a></li>
+				<li><a href="/timeline_item/edit/{{ timelineItem.slug }}">{{ timelineItem.title }}</a></li>
 			{% endfor %}
 		</ul>
 	</div>

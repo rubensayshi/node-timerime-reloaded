@@ -37,7 +37,7 @@ timelines_repo.find = function(_cond, _fields, _options, _finish)
 		function(callback) {
 			Timeline.find(cond, fields, options, callback);
 		},
-		function(timelines, callback) {
+		function(timelines, callback) {		
 			async.map(timelines, function(timeline, callback) {
 				User.findById(timeline.author_id, function(error, doc) {
 					timeline.author = doc;
@@ -61,7 +61,7 @@ timelines_repo.findOne = function(_cond, _fields, _options, _finish)
 		function(callback) {
 			Timeline.findOne(cond, fields, options, callback);
 		},
-		function(timeline, callback) {
+		function(timeline, callback) {			
 			User.findById(timeline.author_id, function(error, doc) {
 				timeline.author = doc;
 				callback(error, timeline);

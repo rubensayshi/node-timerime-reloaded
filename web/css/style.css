@@ -100,7 +100,7 @@ h3								{ font-size: 150% }
 .block.two-col 					{ width: 670px; clear: both; }
 .site_content-sidebar .block	{ width: 295px; clear: both; }
 .block .header 					{ padding: 5px; background-color: #6BBA70; border-bottom: 1px solid #36393D; font-family: 'MEgalopolisExtra'; font-size: 14px; height: 16px; }
-.block .content 				{ padding: 5px; }
+.block .content 				{ padding: 5px; min-height: 100px; }
 
 /*
  * timeline list styling (homepage etc)

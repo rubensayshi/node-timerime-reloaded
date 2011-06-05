@@ -47,4 +47,7 @@ module.exports = exports = function(app) {
 			}
 		);
 	});
+	app.get('/new_timeline', auth.restrict, function(req, res) {
+		core.render('plain.html', {header: 'Work In Progress', content: 'creating a new timelines in 2823526353 way to complex steps ...'}, res);
+	});
 };

@@ -125,3 +125,12 @@ ul.category_list li						{ float: left; display: block; width: 220px; }
 .mytimerime ul 							{ list-style: none; }
 .mytimerime ul li						{ position: relative; height: 20px; line-height: 20px; }
 .mytimerime ul li .admin				{ position: absolute; top: 2px; right: 2px; }
+
+/*
+ * timeline (and item) detail page styling
+ */
+.timeline .intro						{  }
+.timeline .body							{ margin-top: 20px; min-height: 200px; }
+.timeline .prev_next_nav				{ margin-top: 20px; height: 15px; padding: 5px; }
+.timeline .prev_next_nav .prev			{ height: 15px; float: left; width: 50%; text-align: left; }
+.timeline .prev_next_nav .next			{ height: 15px; float: right; width: 50%; text-align: right; }

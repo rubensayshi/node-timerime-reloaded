@@ -1,12 +1,13 @@
-var core			= require('../lib/core'),
-	mongoose		= require('mongoose'),
-	async			= require('async'),
-	User	 		= mongoose.model('User'),
-	Category 		= mongoose.model('Category'),
-	Timeline 		= mongoose.model('Timeline'),
-	TimelineItem	= mongoose.model('TimelineItem'),
-	timelines_repo	= require('../repositories/timelines'),
-	categories_repo	= require('../repositories/categories');
+var core				= require('../lib/core'),
+	mongoose			= require('mongoose'),
+	async				= require('async'),
+	User	 			= mongoose.model('User'),
+	Category 			= mongoose.model('Category'),
+	Timeline 			= mongoose.model('Timeline'),
+	TimelineItem		= mongoose.model('TimelineItem'),
+	timelines_repo		= require('../repositories/timelines'),
+	timeline_items_repo	= require('../repositories/timeline_items'),
+	categories_repo		= require('../repositories/categories');
 
 module.exports = exports = function(app) {	
 	app.get('/', function(req, res) {	
@@ -91,14 +92,33 @@ module.exports = exports = function(app) {
 		async.waterfall([
        		function(callback) {
        			// fetch timeline_item
-       			TimelineItem.findOne({slug : req.params['timeline_item_slug']}, callback);
+       			timeline_items_repo.findOne({slug : req.params['timeline_item_slug']}, callback);
        		},
-       		function(timeline_item, callback) {
-       			// fetch surrounding items I think ?
-       			callback(null, timeline_item, []);
+       		function(timelineItem, callback) {
+       			timeline_items_repo.find({timeline_id : timelineItem.timeline_id}, function(error, docs) {
+       				var prev = null;
+       				var next = null;
+       				var curr = false;
+       				
+       				async.forEachSeries(docs, function(doc, callback) {
+       					if(next) 
+       						return callback();
+       					       					
+       					if (doc._id.toString() == timelineItem._id.toString()) {
+       						curr = true;
+       					} else if(curr) {
+       						next = doc;
+       					} else {       					
+       						prev = doc;  
+       					}
+       					
+       					callback();
+       				}, function(error) { callback(error, timelineItem, prev, next); });
+       			});       	       		
        		}
-       	], function(error, timelineItem, surrounding) {
-  			core.render('timeline_item.html', {timelineItem : timelineItem}, function (error, result) {
+       	], function(error, timelineItem, prev, next) {
+			
+  			core.render('timeline_item.html', {timelineItem : timelineItem, prev : prev, next : next}, function (error, result) {
   		        if (error) {
   		            console.log(error);
   		        } else {

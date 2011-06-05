@@ -3,8 +3,19 @@
 {% block content %}
 <div class="block two-col">
 	<div class="header">{{ timelineItem.title }}</div>
-	<div class="content">
-		<p>{{ timelineItem.body }}</p>
+	<div class="content timeline timeline_item">
+		<div class="intro">
+			by <b>{{ timelineItem.timeline.author.username }}</b> on {{ timelineItem.timeline.created }}
+		</div>
+		<div class="body">{{ timelineItem.body }}</div>
+		<div class="prev_next_nav">
+			{% if prev %}
+				<a href="/timeline_item/{{ prev.slug }}" class="prev"><< {{ prev.title }}</a>
+			{% endif %}
+			{% if next %}
+			<a href="/timeline_item/{{ next.slug }}" class="next">{{ next.title }} >></a>
+			{% endif %}
+		</div>
 	</div>
 </div>
 {% endblock %}

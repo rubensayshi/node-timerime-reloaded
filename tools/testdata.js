@@ -20,7 +20,7 @@ var chnls	= 3;
 var cats	= 9;
 var users	= 10;
 var tls		= 5;
-var tlis	= 10;
+var tlis	= 15;
 var catsarr = [];
 
 var send	= 0;

@@ -3,10 +3,11 @@ var mongoose		= require('mongoose'),
 	User	 		= mongoose.model('User'),
 	Category 		= mongoose.model('Category'),
 	Timeline 		= mongoose.model('Timeline'),
-	TimelineItem	= mongoose.model('TimelineItem');
+	TimelineItem	= mongoose.model('TimelineItem'),
+	timelines_repo	= require('../repositories/timelines');
 
-var timelines_repo = {};
-timelines_repo.args = function(_cond, _fields, _options, _callback)
+var timeline_items_repo = {};
+timeline_items_repo.args = function(_cond, _fields, _options, _callback)
 {	
 	if("function" == typeof _cond) 
 		 _callback = _cond, _cond = null, _fields = null, _options = null;
@@ -20,13 +21,12 @@ timelines_repo.args = function(_cond, _fields, _options, _callback)
 	options			= _options			|| {};
 	callback		= _callback			|| null;
 	
-	options.limit	= options.limit 	|| 10;
-	options.sort	= options.sort	 	|| {};
+	options.sort	= options.sort	 	|| { start_date: 1, _id: 1 };
 	
 	return [cond, fields, options, callback];
 };
 
-timelines_repo.find = function(_cond, _fields, _options, _finish)
+timeline_items_repo.find = function(_cond, _fields, _options, _finish)
 {
 	// normalize the args
 	var args = this.args(_cond, _fields, _options, _finish);
@@ -35,39 +35,38 @@ timelines_repo.find = function(_cond, _fields, _options, _finish)
 	
 	async.waterfall([
 		function(callback) {
-			Timeline.find(cond, fields, options, callback);
+			TimelineItem.find(cond, fields, options, callback);
 		},
-		function(timelines, callback) {
-			async.map(timelines, function(timeline, callback) {
-				User.findById(timeline.author_id, function(error, doc) {
-					timeline.author = doc;
-					callback(error, timeline);
+		function(timeline_items, callback) {
+			async.map(timeline_items, function(timeline_item, callback) {
+				timelines_repo.findOne({_id : timeline_item.timeline_id}, function(error, doc) {
+					timeline_item.timeline = doc;
+					callback(error, timeline_item);
 				});
 			}, function(error) {
-				callback(error, timelines);
+				callback(error, timeline_items);
 			});
 		}
 	], finish);
 };
 
-timelines_repo.findOne = function(_cond, _fields, _options, _finish)
+timeline_items_repo.findOne = function(_cond, _fields, _options, _finish)
 {
 	// normalize the args
 	var args = this.args(_cond, _fields, _options, _finish);
 	var cond = args[0], fields = args[1], options = args[2], finish = args[3];
 		
-	
 	async.waterfall([
 		function(callback) {
-			Timeline.findOne(cond, fields, options, callback);
+			TimelineItem.findOne(cond, fields, options, callback);
 		},
-		function(timeline, callback) {
-			User.findById(timeline.author_id, function(error, doc) {
-				timeline.author = doc;
-				callback(error, timeline);
+		function(timeline_item, callback) {		
+			timelines_repo.findOne({_id : timeline_item.timeline_id}, function(error, doc) {
+				timeline_item.timeline = doc;
+				callback(error, timeline_item);
 			});
 		}
 	], finish);
 };
 
-exports = module.exports = timelines_repo;
+exports = module.exports = timeline_items_repo;
